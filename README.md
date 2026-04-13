@@ -68,10 +68,10 @@ The agent reads `knowledge/index.md`, identifies five relevant pages, reads them
 │  Raw Sources │──────────▶ │       LLM Agent         │──────────▶ │   Knowledge Base     │
 │              │            │                         │            │                      │
 │  Articles    │            │  • Reads index          │            │  knowledge/          │
-│  Papers      │            │  • Extracts structure   │            │  ├── concepts/   21  │
-│  Transcripts │            │  • Updates cross-refs   │            │  ├── sources/     5  │
-│  Reports     │            │  • Flags contradictions │            │  ├── entities/    6  │
-│  Notes       │            │  • Maintains audit log  │            │  ├── analyses/    1  │
+│  Papers      │            │  • Extracts structure   │            │  ├── concepts/   25  │
+│  Transcripts │            │  • Updates cross-refs   │            │  ├── sources/     9  │
+│  Reports     │            │  • Flags contradictions │            │  ├── entities/    9  │
+│  Notes       │            │  • Maintains audit log  │            │  ├── analyses/    2  │
 └──────────────┘            └─────────────────────────┘            │  └── overviews/   1  │
   gitignored                                                        └──────────────────────┘
   (source of truth)                                                   versioned · linked · typed
@@ -121,15 +121,16 @@ The agent reads `knowledge/index.md`, identifies five relevant pages, reads them
 |---|---|---|
 | **Software Engineering** | 6 | Naming conventions, documentation, TDD + testing pyramid, code review, version control, performance |
 | **Security** | 4 | Secure coding (OWASP/CERT/NIST/ISO), runtime security, vulnerability taxonomy, cryptography |
-| **AI Agent Systems** | 3 | Agent tool design (5 principles), tool evaluation methodology, Model Context Protocol |
-| **Mobile Development** | 6 | Mobile-first design, CI/CD pipelines, state management (Redux/Bloc), modular architecture, analytics |
+| **AI Agent Systems** | 6 | Agent tool design (5 principles), tool evaluation, MCP, chain-of-thought prompting, ReAct framework, RAG |
 | **Software Architecture** | 2 | Attribute-Driven Design (ADD), LLM-assisted architecture, human-in-the-loop design collaboration |
+| **Mobile Development** | 6 | Mobile-first design, CI/CD pipelines, state management (Redux/Bloc), modular architecture, analytics |
+| **Cloud & Deployment** | 1 | Twelve-Factor App methodology, config-in-environment, stateless processes, dev/prod parity |
 
-**5 sources ingested · 21 concept pages · 6 entity pages · 1 analysis · 1 domain overview · 5 domains**
+**9 sources ingested · 25 concept pages · 9 entity pages · 2 analyses · 1 domain overview · 6 domains**
 
 ![Knowledge Graph](docs/assets/graph.png)
 
-*The knowledge graph in Obsidian — 34 pages across 5 domains. Red nodes are highest-linked (index, agent-tool-design, tool-evaluation). Every edge is a wiki-link maintained by the agent.*
+*The knowledge graph in Obsidian — 46 pages across 6 domains. Red nodes are highest-linked (index, agent-tool-design, tool-evaluation). Every edge is a wiki-link maintained by the agent.*
 
 ---
 
@@ -388,8 +389,10 @@ This project is in the spirit of Vannevar Bush's 1945 Memex — a personal, asso
 
 ## Roadmap
 
-- [x] Analysis pages — `knowledge/analyses/llm-assisted-vs-traditional-architecture.md` filed
+- [x] Analysis pages — LLM-assisted vs. traditional architecture; RAG vs. compile-once knowledge graph
 - [x] GitHub Actions lint workflow — `.github/workflows/lint.yml` validates frontmatter on every push
 - [x] Search script — `scripts/search.py` with keyword/regex search and `--type` filter
+- [x] AI reasoning foundations — Chain-of-Thought (Wei et al. 2022), ReAct (Yao et al. 2022), RAG (Lewis et al. 2020)
+- [x] Cloud & Deployment domain — Twelve-Factor App methodology (Wiggins / Heroku)
 - [ ] Domain overview pages — one complete (`ai-agent-systems`); more domains to follow
 - [ ] Multi-domain projects — `knowledge/projects/` for applying the base to real engagements
