@@ -1,0 +1,16 @@
+# Source documents — local only (copyright; raw articles not committed)
+raw/
+
+# Obsidian application config — local only
+.obsidian/
+
+# Claude Code local settings
+.claude/
+
+# OS artifacts
+.DS_Store
+Thumbs.db
+
+# Editor artifacts
+*.swp
+*.swo
