@@ -249,6 +249,52 @@ python scripts/stats.py
 
 ---
 
+## Using with Other LLMs
+
+The knowledge base and operating manual are agent-agnostic. `AGENTS.md` is plain English — no Claude-specific syntax, no SDK dependencies. The only Claude-specific file is `CLAUDE.md`, which is a 5-line session bootstrap that simply tells Claude Code to read `AGENTS.md` first. Every other agent runtime needs an equivalent bootstrap.
+
+### Cursor (GPT-4, Claude, Gemini)
+
+Add a `.cursorrules` file in the repository root:
+
+```
+Before doing anything in this repository, read AGENTS.md completely.
+It contains the full operating manual — folder structure, page schemas,
+and all four workflows (ingest, query, lint, update).
+Then read knowledge/index.md to understand the current state of the knowledge base.
+```
+
+All four workflows work identically in Cursor — type the same prompts (`ingest raw/file.md`, `lint`, etc.) in the Cursor chat.
+
+### ChatGPT / Gemini (with file access)
+
+Upload `AGENTS.md` and `knowledge/index.md` as attachments in your first message, then prompt:
+
+```
+Follow the instructions in AGENTS.md exactly.
+You are the LLM agent described in that file.
+Read knowledge/index.md to understand the current state of the knowledge base.
+You are ready to receive ingest, query, lint, or update commands.
+```
+
+### Any agentic framework (LangChain, CrewAI, AutoGen)
+
+Inject the contents of `AGENTS.md` as the system prompt. Give the agent two tools: `read_file` and `write_file`. The workflows in `AGENTS.md` define exactly what the agent should do with them.
+
+### What works everywhere vs. what is Claude Code-specific
+
+| Component | Portable | Notes |
+|---|---|---|
+| `AGENTS.md` | Yes | The full operating manual — works with any LLM |
+| `knowledge/` | Yes | Plain Markdown — readable and writable by any agent |
+| `templates/` | Yes | Plain Markdown scaffolds |
+| `logs/` | Yes | Plain Markdown append log |
+| `CLAUDE.md` | Claude Code only | Replace with `.cursorrules` or equivalent for other tools |
+| `scripts/` | Yes | Standard Python — run independently of any LLM |
+| `.github/workflows/` | Yes | Standard GitHub Actions — not LLM-specific |
+
+---
+
 ## Repository Structure
 
 ```
