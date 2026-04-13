@@ -82,6 +82,7 @@ Tool design is not a one-shot task. The correct workflow is:
 - [[concepts/tool-evaluation|Tool Evaluation]] — the methodology for measuring and improving tool performance
 - [[concepts/model-context-protocol|Model Context Protocol (MCP)]] — the protocol through which tools are exposed to agents
 - [[concepts/naming-conventions|Naming Conventions]] — namespacing tools is an extension of naming principles from general software development
+- [[concepts/llm-assisted-architecture|LLM-Assisted Architecture]] — extends the core principle of this concept to architecture design: providing an explicit design process (ADD) to an LLM scaffolds complex reasoning the same way tool descriptions scaffold tool use. Both make LLM behavior predictable through externalized, explicit context rather than training-data assumptions.
 
 ## Open Questions
 

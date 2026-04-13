@@ -73,6 +73,7 @@ Match complexity to the problem. A simple app doesn't need Clean Architecture. S
 - [[concepts/cicd-pipelines|CI/CD Pipelines]] — modular codebases build faster in CI (parallel module builds) and are safer to deploy
 - [[concepts/test-driven-development|Test-Driven Development]] — modular architecture makes unit testing straightforward; each module is testable in isolation
 - [[concepts/performance-optimization|Performance Optimization]] — lazy module loading can improve startup time; unnecessary dependencies between modules cause avoidable overhead
+- [[concepts/llm-assisted-architecture|LLM-Assisted Architecture]] — LLM-assisted ADD case studies consistently produced microservices, CQRS, and Clean Architecture as default outputs; the method is a new source of empirical evidence for which modular patterns LLMs reach for given common quality attribute drivers
 
 ## Open Questions
 

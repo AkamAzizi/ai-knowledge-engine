@@ -85,6 +85,7 @@ Metric signals and what they mean:
 - [[concepts/agent-tool-design|Agent Tool Design]] — tool evaluation is the feedback mechanism that drives tool improvement
 - [[concepts/test-driven-development|Test-Driven Development]] — analogous philosophy: define correct behavior first, then write/improve code to pass. Key difference: evals are probabilistic, not deterministic.
 - [[concepts/model-context-protocol|Model Context Protocol (MCP)]] — tools being evaluated are typically MCP server tools
+- [[concepts/llm-assisted-architecture|LLM-Assisted Architecture]] — the ATAM-like scenario-based architect evaluation used in the ADD paper is a domain-specific instance of this loop: define expected driver satisfaction upfront, run the design, measure against those criteria, iterate
 
 ## Open Questions
 
