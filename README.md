@@ -89,28 +89,29 @@ The agent reads `knowledge/index.md`, identifies five relevant pages, reads them
 
 ## Key Design Decisions
 
-**Typed pages with enforced schema** — five distinct page types (`concept`, `entity`, `source`, `analysis`, `overview`), each with a mandatory section structure and YAML frontmatter. The schema is enforced by `AGENTS.md`, not by code — making it portable across any LLM.
+**Index-first navigation, not embeddings** — `knowledge/index.md` is a structured catalog the agent reads at session start. At moderate scale (~100 sources, ~hundreds of pages), this outperforms embedding-based retrieval for structured knowledge — no vector infrastructure, no latency, no cost per query.
 
-**Contradiction tracking as a first-class feature** — when new sources conflict with existing claims, conflicts are flagged explicitly on both the source page and the affected concept page. Nothing is silently overwritten. The knowledge base knows what it doesn't know.
+**Schema enforced in plain English** — the page schemas and workflows live in `AGENTS.md`, not in code. Any LLM that can read instructions and edit files can run this system. No SDK dependency, no vendor lock-in.
 
-**Index-first navigation** — `knowledge/index.md` is a structured catalog the agent reads at the start of every session. At moderate scale (~100 sources, ~hundreds of pages), this outperforms embedding-based RAG for structured knowledge retrieval — no vector infrastructure required.
+**Contradiction tracking as a first-class feature** — every source page has a `## Contradictions` section. When a new source conflicts with existing knowledge, the conflict is flagged explicitly on both the source page and the affected concept page. Nothing is silently overwritten. The knowledge base knows what it does not know.
 
-**Append-only audit log** — every ingest, query, lint, and update is recorded in `logs/ingestion.md` with a timestamp, pages changed, and key findings. Full operational history without a database.
-
-**Agent-agnostic design** — `AGENTS.md` is plain English. It works with Claude, GPT-4, Gemini, or any LLM capable of reading instructions and editing files. No SDK dependency, no vendor lock-in.
+**Compile-once, query-fast** — synthesis happens at ingest time, not query time. By the time you ask a question, the relevant pages have already been written, cross-referenced, and updated across multiple sources. Queries read compiled knowledge rather than re-deriving it from raw documents each time.
 
 ---
 
 ## Features
 
-- **5 typed page schemas** — `concept`, `entity`, `source`, `analysis`, `overview` with enforced section structure per type
-- **Mandatory YAML frontmatter** — `title`, `type`, `tags`, `created`, `updated`, `sources` on every page; queryable and machine-readable
-- **Graph-native cross-linking** — aggressive wiki-link cross-referencing creates a navigable knowledge graph visible in Obsidian's graph view
-- **Explicit contradiction and gap tracking** — `## Contradictions` and `## Open Questions` sections on every page surface what is unresolved
-- **4 agent workflows** — `ingest`, `query`, `lint`, `update` — each a deterministic step-by-step procedure in `AGENTS.md`
-- **Append-only ingestion log** — full audit trail of every operation with timestamps, page counts, and findings
-- **Reusable templates** — `templates/` folder with blank scaffolds for every page type; portable to any new domain or project
-- **Git-native** — the knowledge base is a markdown repo; branching, history, and diffing work out of the box
+- **5 typed page schemas** — `concept`, `entity`, `source`, `analysis`, `overview`; each with a mandatory section structure enforced by `AGENTS.md`
+- **Mandatory YAML frontmatter** — `title`, `type`, `tags`, `created`, `updated`, `sources` on every page; machine-readable and queryable
+- **Explicit contradiction and gap tracking** — `## Contradictions` and `## Open Questions` sections on every page; conflicts between sources are flagged explicitly, never silently overwritten
+- **Graph-native cross-linking** — wiki-link syntax creates a navigable knowledge graph visible in Obsidian's graph view
+- **4 deterministic agent workflows** — `ingest`, `query`, `lint`, `update`; each a step-by-step procedure with defined inputs, outputs, and stopping criteria
+- **Append-only audit log** — every operation recorded in `logs/ingestion.md` with timestamp, pages changed, and findings
+- **Utility scripts** — `lint_frontmatter.py`, `search.py`, `stats.py`; stdlib-only, no dependencies
+- **CI validation** — GitHub Actions workflow validates frontmatter schema on every push
+- **Reusable templates** — blank scaffolds for every page type in `templates/`; portable to any new domain
+- **Agent-agnostic** — `AGENTS.md` is plain English; works with Claude, GPT-4, Gemini, or any LLM that can read instructions and edit files
+- **Git-native** — the knowledge base is a Markdown repo; branching, history, and diffing work out of the box
 
 ---
 
@@ -132,33 +133,119 @@ The agent reads `knowledge/index.md`, identifies five relevant pages, reads them
 
 ---
 
-## Quickstart
+## Getting Started
+
+### Prerequisites
+
+| Tool | Required | Purpose |
+|---|---|---|
+| [Claude Code](https://claude.ai/code) | Yes | LLM agent runtime — runs all four workflows |
+| Git | Yes | Clone and version the knowledge base |
+| [Obsidian](https://obsidian.md/) | Recommended | Graph view, wiki-link navigation, local Markdown editor |
+
+Install Claude Code via npm or download the desktop app:
 
 ```bash
-# 1. Clone and open in Obsidian
-git clone https://github.com/akamazizi/ai-knowledge-engine
-# Open the cloned folder as an Obsidian vault
-
-# 2. Add a source
-# Drop any article, paper, or notes file into raw/
-
-# 3. Ingest it with Claude Code
-# Open Claude Code in the repo root and say:
-ingest raw/your-file.md
-
-# 4. The agent will:
-# → Surface key takeaways for your review
-# → Create knowledge/sources/<slug>.md
-# → Create or update concept and entity pages
-# → Update knowledge/index.md
-# → Append to logs/ingestion.md
+npm install -g @anthropic-ai/claude-code
 ```
 
-**To query:** Ask any question in plain language. Answers cite specific knowledge pages and can be filed as `knowledge/analyses/` entries.
+### Setup
 
-**To health-check:** Say `lint`. The agent audits for contradictions, orphan pages, missing links, and data gaps.
+```bash
+# Clone the repository
+git clone https://github.com/AkamAzizi/ai-knowledge-engine
+cd ai-knowledge-engine
+```
 
-**Full operating instructions:** [`AGENTS.md`](./AGENTS.md)
+**Open in Obsidian *(recommended)*:** Obsidian → File → Open Vault → select the `ai-knowledge-engine` folder. This enables the graph view and wiki-link navigation.
+
+**Start a Claude Code session in the repository root:**
+
+```bash
+claude
+```
+
+Claude Code reads `CLAUDE.md` on startup, which points the agent to `AGENTS.md`. The agent loads the full operating manual and `knowledge/index.md` before doing anything. You are ready.
+
+---
+
+## How to Use
+
+All workflows are triggered by natural language inside a Claude Code session — not shell commands. Open Claude Code in the repository root and type the prompts below.
+
+### 1. Ingest a source
+
+Save any article, paper, transcript, or notes file as a Markdown file in `raw/`. [Obsidian Web Clipper](https://obsidian.md/clipper) converts web pages to local Markdown in one click.
+
+Then, in Claude Code:
+
+```
+ingest raw/your-file.md
+```
+
+The agent will:
+1. Read the source and surface 2–3 key takeaways for your review
+2. Confirm emphasis before writing anything
+3. Create `knowledge/sources/<slug>.md` — structured summary with key points, entities, and open questions
+4. Create or update relevant concept and entity pages
+5. Update `knowledge/index.md` and append an entry to `logs/ingestion.md`
+
+> **Example:** ingesting a 3,000-word security article produced one source page, three new concept pages, one updated concept page, and nine total file changes — in a single session.
+
+### 2. Query the knowledge base
+
+Ask any question in plain language:
+
+```
+What are the most important secure coding practices for a mobile fintech app?
+```
+
+The agent reads `knowledge/index.md`, identifies the relevant pages, and returns a structured answer with inline citations linking to specific knowledge pages. It then offers to file the answer as a permanent analysis page under `knowledge/analyses/`.
+
+### 3. Health-check (lint)
+
+```
+lint
+```
+
+The agent audits all knowledge pages and reports:
+
+- Contradictions between pages
+- Stale claims superseded by newer sources
+- Orphan pages with no inbound links
+- Concepts mentioned across pages but without their own page
+- Missing cross-references and data gaps
+
+It will present a plan and ask for confirmation before applying fixes to more than 5 files.
+
+### 4. Update an existing page
+
+```
+Update the secure-coding concept page — add the new NIST guidelines from raw/nist-update.md
+```
+
+The agent reads the existing page, makes targeted changes only, updates the `updated:` frontmatter date, and refreshes the page's summary in `knowledge/index.md`.
+
+---
+
+### Utility Scripts
+
+Run these independently of Claude Code for quick inspection or CI validation:
+
+```bash
+# Validate YAML frontmatter on all knowledge/ pages
+python scripts/lint_frontmatter.py
+
+# Search by keyword or regex with optional type filter
+python scripts/search.py "OAuth" --type concept
+
+# Print page counts, most-linked nodes, and orphan detection
+python scripts/stats.py
+```
+
+---
+
+**Full operating manual:** [`AGENTS.md`](./AGENTS.md) — covers all workflows, page schemas, naming conventions, and behavioral rules in detail.
 
 ---
 
@@ -204,15 +291,25 @@ ai-knowledge-engine/
 
 ## Use Cases
 
-**AI consulting and client engagements** — maintain a continuously updated knowledge base per engagement. Each new brief, research doc, or transcript ingested updates the relevant concept and entity pages automatically. Cross-engagement patterns surface through the linked graph.
+### Research and domain expertise
 
-**System design and architecture** — compile design patterns, ADRs (Architecture Decision Records), and trade-off analyses. Overview pages become living design documents. Link a decision to the source that informed it.
+You are reading papers and articles on a topic over several weeks. Instead of highlights that go nowhere, you ingest each source as you read it. By source five, your concept pages reflect a synthesis no single paper contains — with explicit contradictions flagged, open questions tracked, and a reading map in the overview page. When you need to brief someone, the overview page is already written.
 
-**Research and due diligence** — build domain expertise over weeks or months. Each new paper updates existing concept pages and explicitly flags where it contradicts prior sources. The overview page reflects current best understanding, not just the last thing read.
+### System design and architecture
 
-**Technical writing and thought leadership** — the analysis pages in `knowledge/analyses/` are ready-to-publish synthesis. The structured base means research is already organized when it is time to write.
+You are designing a new service. Ingest your ADRs (Architecture Decision Records), relevant design pattern references, and postmortems from past incidents. Query the base before each significant decision to surface precedents, check whether a proposed approach contradicts an earlier one, and identify what the existing knowledge says about the tradeoffs. Analysis pages become the architecture recommendation document.
 
-**Team knowledge management** — feed meeting transcripts, Slack threads, and postmortems into the system. The wiki stays current because the LLM handles the maintenance that no one on the team wants to do.
+### Technical writing and thought leadership
+
+You want to write an article or talk on a topic you have been researching. After ingesting your sources, query the base with the specific question your piece answers. File the response as an analysis page. Your research is already organised, cited, and cross-referenced — the writing is the last step, not the longest one.
+
+### Client and consulting engagements
+
+For each engagement, maintain a dedicated vault. Ingest briefs, research documents, competitor analyses, and meeting transcripts as they arrive. The agent cross-references new material against what it already knows, flags where a new brief contradicts prior assumptions, and keeps entity pages (people, products, organisations) current. Query at any point to surface relevant context or synthesise a recommendation.
+
+### Team knowledge management
+
+Feed in incident postmortems, RFC documents, onboarding guides, and meeting notes. The agent handles the filing — linking decisions to the sources that informed them, tagging people and systems as entities, and flagging when new information contradicts an existing policy. New team members query the base rather than interrupting colleagues. The wiki stays current because the LLM does the maintenance no one else wants to do.
 
 ---
 
@@ -235,7 +332,7 @@ This project is in the spirit of Vannevar Bush's 1945 Memex — a personal, asso
 | Layer | Tool | Purpose |
 |---|---|---|
 | Knowledge editor | [Obsidian](https://obsidian.md/) | Graph view, local editor, wiki-link rendering |
-| LLM agent runtime | [Claude Code](https://www.anthropic.com/claude-code) | File editing, multi-step reasoning, schema adherence |
+| LLM agent runtime | [Claude Code](https://claude.ai/code) | File editing, multi-step reasoning, schema adherence |
 | Knowledge format | Markdown + YAML | Portable, human-readable, git-native |
 | Source clipping | [Obsidian Web Clipper](https://obsidian.md/clipper) | Convert web articles to local markdown |
 | Agent protocol | [Model Context Protocol](https://modelcontextprotocol.io/) | Tool integration layer for agent-tool communication |
