@@ -9,7 +9,7 @@ sources: []
 
 # Knowledge Index
 
-_Last updated: 2026-04-13 — 5 sources, 34 pages_
+_Last updated: 2026-04-13 — 9 sources, 46 pages_
 
 Master catalog of all knowledge pages. Read this first on every session to orient before querying or ingesting. Updated on every ingest, update, or lint operation. Full operations history in [`logs/ingestion.md`](../logs/ingestion.md).
 
@@ -21,6 +21,10 @@ Master catalog of all knowledge pages. Read this first on every session to orien
 - [[sources/oligo-secure-coding-best-practices|Secure Coding: Top 7 Best Practices, Risks, and Future Trends]] — Oligo Security article by Mic McCully; deep security focus: input sanitization, obfuscation, least privilege, cryptography, vulnerability types, standards (OWASP/CERT/NIST/ISO), runtime security, future trends
 - [[sources/writing-effective-tools-for-ai-agents|Writing Effective Tools for AI Agents — Using AI Agents]] — Anthropic engineering blog by Ken Aizawa; tool design for LLM agents: the 5 principles, evaluation-driven workflow, MCP, token efficiency, prompt-engineered descriptions
 - [[sources/mobile-app-best-practices-2025|10 Best Practices for Mobile App Development in 2025]] — Wonderment Apps blog; mobile-first design, cross-platform frameworks, state management, CI/CD, modular architecture, user-centric design, analytics/monitoring
+- [[sources/retrieval-augmented-generation-lewis-2020|Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks]] — Lewis et al. (NeurIPS 2020); RAG architecture: DPR retriever + BART generator; hybrid parametric/non-parametric memory; index hot-swapping; SOTA on NQ/TriviaQA
+- [[sources/react-reasoning-acting-yao-2022|ReAct: Synergizing Reasoning and Acting in Language Models]] — Yao et al. (ICLR 2023); interleaved Thought-Action-Observation traces; grounding prevents hallucination; +34% on ALFWorld vs. imitation learning
+- [[sources/chain-of-thought-prompting-wei-2022|Chain-of-Thought Prompting Elicits Reasoning in Large Language Models]] — Wei et al. (NeurIPS 2022); intermediate reasoning steps; emergent at ~100B+ scale; PaLM 540B + CoT = GSM8K SOTA
+- [[sources/the-twelve-factor-app|The Twelve-Factor App]] — Adam Wiggins / Heroku; 12 principles for portable, cloud-deployable SaaS apps; central principle: eliminate implicit coupling between app and execution environment
 
 ## Entities
 - [[entities/amberle-mckee|Amberle McKee]] — DataCamp author; coding best practices tutorial
@@ -29,6 +33,9 @@ Master catalog of all knowledge pages. Read this first on every session to orien
 - [[entities/oligo-security|Oligo Security]] — runtime application security company
 - [[entities/ken-aizawa|Ken Aizawa]] — Anthropic engineer; agent tool design article
 - [[entities/anthropic|Anthropic]] — creator of Claude, MCP, Claude Code; source of the agent tool design article
+- [[entities/meta-ai|Meta AI]] — Facebook AI Research; creator of RAG, DPR, BART, and FAISS
+- [[entities/google-brain|Google Brain / Google DeepMind]] — origin of Chain-of-Thought prompting and ReAct framework
+- [[entities/heroku|Heroku]] — cloud platform company; origin of the Twelve-Factor App methodology
 
 ## Concepts
 
@@ -47,13 +54,19 @@ Master catalog of all knowledge pages. Read this first on every session to orien
 - [[concepts/security-standards|Security Standards]] — OWASP, CERT, NIST SP 800-53/218, ISO/IEC 27001 Control 8.28
 
 ### AI Agent Systems
-- [[concepts/agent-tool-design|Agent Tool Design]] — tools for non-deterministic LLM agents; 5 principles: selection, namespacing, context quality, token efficiency, prompt-engineered descriptions
+- [[concepts/agent-tool-design|Agent Tool Design]] — tools for non-deterministic LLM agents; 5 principles: selection, namespacing, context quality, token efficiency, prompt-engineered descriptions *(3 sources)*
 - [[concepts/tool-evaluation|Tool Evaluation]] — prototype → eval → agent-assisted improvement loop; task design, metrics, verifiers
 - [[concepts/model-context-protocol|Model Context Protocol (MCP)]] — Anthropic's open protocol for connecting agents to tools
+- [[concepts/chain-of-thought-prompting|Chain-of-Thought Prompting]] — intermediate reasoning steps; emergent capability at ~100B+ scale; prompting-level instance of the scaffolding principle
+- [[concepts/react-framework|ReAct]] — interleaved Thought-Action-Observation traces; grounding prevents hallucination; cognitive architecture for LLM agents
+- [[concepts/retrieval-augmented-generation|Retrieval-Augmented Generation (RAG)]] — hybrid parametric + non-parametric memory; DPR retriever + BART generator; index hot-swapping; architectural counterpoint to compile-once
 
 ### Software Architecture
 - [[concepts/attribute-driven-design|Attribute-Driven Design (ADD)]] — iterative architecture method driven by quality attributes, functional requirements, constraints, and concerns; 7-step iteration cycle
 - [[concepts/llm-assisted-architecture|LLM-Assisted Architecture]] — LLM as collaborative design partner; requires explicit process scaffolding (ADD), iteration plan, human-in-the-loop oversight, and single living document as state management
+
+### Cloud & Deployment
+- [[concepts/twelve-factor-app|Twelve-Factor App]] — 12 principles for portable, cloud-deployable SaaS apps; central principle: eliminate implicit coupling between app and execution environment
 
 ### Mobile App Development
 - [[concepts/mobile-first-design|Mobile-First Design]] — design for smallest screen first; cross-platform frameworks (React Native, Flutter, .NET MAUI); hot reloading
@@ -65,6 +78,7 @@ Master catalog of all knowledge pages. Read this first on every session to orien
 
 ## Analyses
 - [[analyses/llm-assisted-vs-traditional-architecture|LLM-Assisted vs. Traditional Architecture Design]] — comparative analysis across speed, documentation quality, driver satisfaction, expertise requirements, failure modes, and scalability; includes cross-source insights and actionable recommendation
+- [[analyses/rag-vs-compile-once-knowledge-graph|RAG vs. Compile-Once Knowledge Graph]] — when to use RAG vs. pre-compiled structured knowledge; 8 comparison dimensions; hybrid recommendation; directly addresses this project's architectural choice
 
 ## Overviews
 - [[overviews/ai-agent-systems|AI Agent Systems]] — domain synthesis across tool design and LLM-assisted architecture; thesis: explicit scaffolding is the primary mechanism for reliable LLM behaviour; reading map, gaps, open questions

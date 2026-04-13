@@ -13,6 +13,42 @@ Append-only. Most recent entries at top. Format: `## [YYYY-MM-DD] operation | de
 
 ---
 
+## [2026-04-13] ingest | Four new sources: RAG, ReAct, Chain-of-Thought, Twelve-Factor App
+
+Sources ingested:
+- `raw/retrieval-augmented-generation-lewis-2020.md` — Lewis et al. (NeurIPS 2020)
+- `raw/react-reasoning-acting-yao-2022.md` — Yao et al. (ICLR 2023)
+- `raw/chain-of-thought-prompting-wei-2022.md` — Wei et al. (NeurIPS 2022)
+- `raw/the-twelve-factor-app.md` — Adam Wiggins / Heroku
+
+Pages created (12):
+- `knowledge/sources/retrieval-augmented-generation-lewis-2020.md`
+- `knowledge/sources/react-reasoning-acting-yao-2022.md`
+- `knowledge/sources/chain-of-thought-prompting-wei-2022.md`
+- `knowledge/sources/the-twelve-factor-app.md`
+- `knowledge/concepts/retrieval-augmented-generation.md`
+- `knowledge/concepts/react-framework.md`
+- `knowledge/concepts/chain-of-thought-prompting.md`
+- `knowledge/concepts/twelve-factor-app.md`
+- `knowledge/entities/meta-ai.md`
+- `knowledge/entities/google-brain.md`
+- `knowledge/entities/heroku.md`
+- `knowledge/analyses/rag-vs-compile-once-knowledge-graph.md`
+
+Pages updated:
+- `knowledge/concepts/agent-tool-design.md` — added ReAct and CoT cross-references; sources list expanded
+- `knowledge/overviews/ai-agent-systems.md` — reading map extended (steps 7–9); key concepts table updated; gaps section revised (RAG, ReAct, CoT now addressed)
+- `knowledge/index.md` — all new pages catalogued; Cloud & Deployment domain added; count updated to 9 sources, 46 pages
+
+Key findings and connections:
+- Chain-of-thought, ReAct, ADD scaffolding, and tool descriptions all operate on the same mechanism: explicit process structure activates reliable LLM behaviour. The scaffolding thesis running through ai-agent-systems.md now has three independent empirical supports across three different application domains.
+- RAG provides the architectural counterpoint to this project's compile-once pattern. The analysis page (rag-vs-compile-once-knowledge-graph) directly addresses this project's design decision with a 8-dimension comparison and hybrid recommendation.
+- Twelve-Factor App adds a Cloud & Deployment domain with direct connections to cicd-pipelines, modular-architecture, and secure-coding (Factor III = no credentials in code).
+
+No contradictions with existing knowledge. Three previously identified gaps in ai-agent-systems overview (RAG, ReAct/CoT as reasoning foundations, agent memory) are now addressed.
+
+---
+
 ## [2026-04-13] query | LLM-assisted vs. traditional architecture design — filed as analysis
 
 Created `knowledge/analyses/llm-assisted-vs-traditional-architecture.md`. Synthesises findings from `llm-assisted-add-architecture` source against `agent-tool-design`, `tool-evaluation`, `state-management`, and `modular-architecture` concepts. Six comparison dimensions (speed, documentation quality, driver satisfaction, expertise, failure modes, scalability), three cross-source insights, tradeoffs, and a recommendation section. This is the first analysis page in the knowledge base.

@@ -4,7 +4,7 @@ type: overview
 tags: [ai-agents, llm-engineering, tool-design, software-architecture, prompt-engineering, overview]
 created: 2026-04-13
 updated: 2026-04-13
-sources: [writing-effective-tools-for-ai-agents, llm-assisted-add-architecture]
+sources: [writing-effective-tools-for-ai-agents, llm-assisted-add-architecture, react-reasoning-acting-yao-2022, chain-of-thought-prompting-wei-2022, retrieval-augmented-generation-lewis-2020]
 ---
 
 # AI Agent Systems — Domain Overview
@@ -44,6 +44,15 @@ Read in this order to build a coherent mental model:
 **6. For the applied comparison**
 → [[analyses/llm-assisted-vs-traditional-architecture|LLM-Assisted vs. Traditional Architecture Design]] — cross-source synthesis; six dimensions; recommendation section.
 
+**7. Understand how scaffolding manifests at the prompting level**
+→ [[concepts/chain-of-thought-prompting|Chain-of-Thought Prompting]] — intermediate reasoning steps as the prompting-level instance of the scaffolding principle. Emergent at scale; the "Thought" in ReAct is CoT applied to agentic execution.
+
+**8. See scaffolding and retrieval combined in an agent loop**
+→ [[concepts/react-framework|ReAct]] — interleaved Thought-Action-Observation traces. Explains why tool descriptions shape agent reasoning (not just action selection), and how retrieval grounding prevents hallucination.
+
+**9. Understand the alternative to compile-once knowledge management**
+→ [[concepts/retrieval-augmented-generation|Retrieval-Augmented Generation]] — parametric + non-parametric hybrid memory. The architectural counterpoint to this project's compile-once approach; the comparison is filed in [[analyses/rag-vs-compile-once-knowledge-graph|RAG vs. Compile-Once Knowledge Graph]].
+
 ---
 
 ## Key Entities
@@ -62,6 +71,9 @@ Read in this order to build a coherent mental model:
 | [[concepts/model-context-protocol\|Model Context Protocol]] | Anthropic's open protocol for connecting agents to tools at scale |
 | [[concepts/attribute-driven-design\|Attribute-Driven Design]] | Iterative architecture method; 7-step iteration cycle driven by quality attributes |
 | [[concepts/llm-assisted-architecture\|LLM-Assisted Architecture]] | LLM as collaborative design partner; explicit scaffolding; human-in-the-loop |
+| [[concepts/chain-of-thought-prompting\|Chain-of-Thought Prompting]] | Intermediate reasoning steps elicit complex multi-step reasoning; emergent at ~100B+ scale |
+| [[concepts/react-framework\|ReAct]] | Interleaved Thought-Action-Observation traces; grounding prevents hallucination |
+| [[concepts/retrieval-augmented-generation\|Retrieval-Augmented Generation]] | Hybrid parametric + non-parametric memory; index hot-swapping; alternative to compile-once |
 
 ---
 
@@ -81,6 +93,7 @@ Sources not yet ingested that would materially strengthen this domain:
 
 - **A multi-agent coordination paper** — current knowledge covers single-agent tool use and single-LLM design sessions. Multi-agent systems (agent orchestration, agent-to-agent communication, shared context management) are entirely absent.
 - **An LLM safety / alignment source** — the knowledge base has no coverage of agent failure modes from a safety perspective: prompt injection, goal misgeneralization, or unsafe tool use in agentic settings.
-- **A source on retrieval-augmented generation (RAG)** — RAG is the alternative architectural pattern to the index-first approach used in this knowledge base. Understanding the tradeoffs requires a dedicated source.
-- **Empirical comparison across LLM providers** — every source in this domain used Claude. A source comparing tool use or reasoning quality across models would either validate or challenge the generalizability of current findings.
-- **A source on agent memory and context management** — context loss is identified as the primary failure mode in LLM-assisted architecture but is treated as an unsolved problem. A dedicated source on external memory, context compression, or RAG-augmented agents would directly address the most pressing open question.
+- **Empirical comparison across LLM providers** — every source in this domain used Claude or Google's PaLM. A source comparing tool use or reasoning quality across models (GPT-4, Gemini, open-weight) would either validate or challenge the generalizability of current findings.
+- **A source on context compression and long-context management** — context loss remains the primary failure mode in LLM-assisted architecture. External memory, compression, and RAG-augmented agents are now covered at the concept level, but no dedicated empirical source exists for long-context management strategies.
+
+_Previously identified gaps now addressed:_ RAG ([[sources/retrieval-augmented-generation-lewis-2020|Lewis et al. 2020]]), agent memory/context ([[concepts/retrieval-augmented-generation|RAG concept]] + [[analyses/rag-vs-compile-once-knowledge-graph|analysis]]), and reasoning foundations ([[sources/chain-of-thought-prompting-wei-2022|Wei et al. 2022]], [[sources/react-reasoning-acting-yao-2022|Yao et al. 2022]]).

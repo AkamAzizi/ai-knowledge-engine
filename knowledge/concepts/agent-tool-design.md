@@ -4,7 +4,7 @@ type: concept
 tags: [ai-agents, tool-design, mcp, llm-engineering, context-efficiency]
 created: 2026-04-13
 updated: 2026-04-13
-sources: [writing-effective-tools-for-ai-agents]
+sources: [writing-effective-tools-for-ai-agents, react-reasoning-acting-yao-2022, chain-of-thought-prompting-wei-2022]
 ---
 
 # Agent Tool Design
@@ -83,6 +83,8 @@ Tool design is not a one-shot task. The correct workflow is:
 - [[concepts/model-context-protocol|Model Context Protocol (MCP)]] — the protocol through which tools are exposed to agents
 - [[concepts/naming-conventions|Naming Conventions]] — namespacing tools is an extension of naming principles from general software development
 - [[concepts/llm-assisted-architecture|LLM-Assisted Architecture]] — extends the core principle of this concept to architecture design: providing an explicit design process (ADD) to an LLM scaffolds complex reasoning the same way tool descriptions scaffold tool use. Both make LLM behavior predictable through externalized, explicit context rather than training-data assumptions.
+- [[concepts/react-framework|ReAct]] — the cognitive architecture that makes the agent's tool-selection reasoning explicit and inspectable. Tool descriptions shape the "Thought:" step in ReAct trajectories — bad descriptions corrupt the reasoning, not just action selection.
+- [[concepts/chain-of-thought-prompting|Chain-of-Thought Prompting]] — prompt-engineered tool descriptions and CoT exemplars operate on the same mechanism: providing explicit structure that activates reliable LLM behaviour.
 
 ## Open Questions
 
