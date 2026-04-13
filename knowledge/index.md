@@ -9,13 +9,14 @@ sources: []
 
 # Knowledge Index
 
-_Last updated: 2026-04-13 — 4 sources, 29 pages_
+_Last updated: 2026-04-13 — 5 sources, 34 pages_
 
 Master catalog of all knowledge pages. Read this first on every session to orient before querying or ingesting. Updated on every ingest, update, or lint operation. Full operations history in [`logs/ingestion.md`](../logs/ingestion.md).
 
 ---
 
 ## Sources
+- [[sources/llm-assisted-add-architecture|An LLM-Assisted Approach to Software Architecture Design Using ADD]] — Cervantes, Kazman, Cai (2025); LLM-assisted ADD; explicit process scaffolding; human-in-the-loop; case studies with Claude Sonnet 3.7
 - [[sources/coding-best-practices-and-guidelines|Coding Best Practices and Guidelines for Better Code]] — DataCamp tutorial by Amberle McKee; structure, documentation, performance, version control, testing, security
 - [[sources/oligo-secure-coding-best-practices|Secure Coding: Top 7 Best Practices, Risks, and Future Trends]] — Oligo Security article by Mic McCully; deep security focus: input sanitization, obfuscation, least privilege, cryptography, vulnerability types, standards (OWASP/CERT/NIST/ISO), runtime security, future trends
 - [[sources/writing-effective-tools-for-ai-agents|Writing Effective Tools for AI Agents — Using AI Agents]] — Anthropic engineering blog by Ken Aizawa; tool design for LLM agents: the 5 principles, evaluation-driven workflow, MCP, token efficiency, prompt-engineered descriptions
@@ -50,6 +51,10 @@ Master catalog of all knowledge pages. Read this first on every session to orien
 - [[concepts/tool-evaluation|Tool Evaluation]] — prototype → eval → agent-assisted improvement loop; task design, metrics, verifiers
 - [[concepts/model-context-protocol|Model Context Protocol (MCP)]] — Anthropic's open protocol for connecting agents to tools
 
+### Software Architecture
+- [[concepts/attribute-driven-design|Attribute-Driven Design (ADD)]] — iterative architecture method driven by quality attributes, functional requirements, constraints, and concerns; 7-step iteration cycle
+- [[concepts/llm-assisted-architecture|LLM-Assisted Architecture]] — LLM as collaborative design partner; requires explicit process scaffolding (ADD), iteration plan, human-in-the-loop oversight, and single living document as state management
+
 ### Mobile App Development
 - [[concepts/mobile-first-design|Mobile-First Design]] — design for smallest screen first; cross-platform frameworks (React Native, Flutter, .NET MAUI); hot reloading
 - [[concepts/cicd-pipelines|CI/CD Pipelines]] — automated build/test/deploy; quality gates; app store deployment automation (TestFlight, Google Play)
@@ -59,7 +64,7 @@ Master catalog of all knowledge pages. Read this first on every session to orien
 - [[concepts/user-centric-design|User-Centric Design]] — user research, personas, journey mapping, prototype testing (Figma/Maze), post-launch feedback loops
 
 ## Analyses
-_No analysis pages yet._
+- [[analyses/llm-assisted-vs-traditional-architecture|LLM-Assisted vs. Traditional Architecture Design]] — comparative analysis across speed, documentation quality, driver satisfaction, expertise requirements, failure modes, and scalability; includes cross-source insights and actionable recommendation
 
 ## Overviews
-_No overview pages yet._
+- [[overviews/ai-agent-systems|AI Agent Systems]] — domain synthesis across tool design and LLM-assisted architecture; thesis: explicit scaffolding is the primary mechanism for reliable LLM behaviour; reading map, gaps, open questions
