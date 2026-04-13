@@ -68,11 +68,11 @@ The agent reads `knowledge/index.md`, identifies five relevant pages, reads them
 │  Raw Sources │──────────▶ │       LLM Agent         │──────────▶ │   Knowledge Base     │
 │              │            │                         │            │                      │
 │  Articles    │            │  • Reads index          │            │  knowledge/          │
-│  Papers      │            │  • Extracts structure   │            │  ├── concepts/   19  │
-│  Transcripts │            │  • Updates cross-refs   │            │  ├── sources/     4  │
+│  Papers      │            │  • Extracts structure   │            │  ├── concepts/   21  │
+│  Transcripts │            │  • Updates cross-refs   │            │  ├── sources/     5  │
 │  Reports     │            │  • Flags contradictions │            │  ├── entities/    6  │
-│  Notes       │            │  • Maintains audit log  │            │  ├── analyses/       │
-└──────────────┘            └─────────────────────────┘            │  └── overviews/      │
+│  Notes       │            │  • Maintains audit log  │            │  ├── analyses/    1  │
+└──────────────┘            └─────────────────────────┘            │  └── overviews/   1  │
   gitignored                                                        └──────────────────────┘
   (source of truth)                                                   versioned · linked · typed
 ```
@@ -122,8 +122,13 @@ The agent reads `knowledge/index.md`, identifies five relevant pages, reads them
 | **Security** | 4 | Secure coding (OWASP/CERT/NIST/ISO), runtime security, vulnerability taxonomy, cryptography |
 | **AI Agent Systems** | 3 | Agent tool design (5 principles), tool evaluation methodology, Model Context Protocol |
 | **Mobile Development** | 6 | Mobile-first design, CI/CD pipelines, state management (Redux/Bloc), modular architecture, analytics |
+| **Software Architecture** | 2 | Attribute-Driven Design (ADD), LLM-assisted architecture, human-in-the-loop design collaboration |
 
-**4 sources ingested · 19 concept pages · 6 entity pages · 4 source summaries · 4 domains**
+**5 sources ingested · 21 concept pages · 6 entity pages · 1 analysis · 1 domain overview · 5 domains**
+
+![Knowledge Graph](docs/assets/graph.png)
+
+*The knowledge graph in Obsidian — 34 pages across 5 domains. Red nodes are highest-linked (index, agent-tool-design, tool-evaluation). Every edge is a wiki-link maintained by the agent.*
 
 ---
 
@@ -131,7 +136,7 @@ The agent reads `knowledge/index.md`, identifies five relevant pages, reads them
 
 ```bash
 # 1. Clone and open in Obsidian
-git clone https://github.com/YOUR_USERNAME/ai-knowledge-engine
+git clone https://github.com/akamazizi/ai-knowledge-engine
 # Open the cloned folder as an Obsidian vault
 
 # 2. Add a source
@@ -180,6 +185,14 @@ ai-knowledge-engine/
 │   ├── entity.md
 │   ├── analysis.md
 │   └── project.md
+│
+├── scripts/                   ← Utility scripts (stdlib only, no dependencies)
+│   ├── lint_frontmatter.py    ← Validate YAML frontmatter on all knowledge/ pages
+│   ├── search.py              ← Keyword/regex search with optional --type filter
+│   └── stats.py               ← Page counts, most-linked concepts, orphan detection
+│
+├── .github/workflows/
+│   └── lint.yml               ← CI: runs lint_frontmatter.py on every push
 │
 ├── logs/
 │   └── ingestion.md           ← Append-only operations log with timestamps
@@ -232,8 +245,8 @@ This project is in the spirit of Vannevar Bush's 1945 Memex — a personal, asso
 
 ## Roadmap
 
-- [ ] Domain overview pages — synthesized reading maps for each knowledge domain
-- [ ] Analysis pages — filed answers to substantive queries demonstrating compounding in action  
-- [ ] GitHub Actions lint workflow — validate frontmatter schema on every push
-- [ ] Search script — grep-based search over `knowledge/` for scale beyond index navigation
+- [x] Analysis pages — `knowledge/analyses/llm-assisted-vs-traditional-architecture.md` filed
+- [x] GitHub Actions lint workflow — `.github/workflows/lint.yml` validates frontmatter on every push
+- [x] Search script — `scripts/search.py` with keyword/regex search and `--type` filter
+- [ ] Domain overview pages — one complete (`ai-agent-systems`); more domains to follow
 - [ ] Multi-domain projects — `knowledge/projects/` for applying the base to real engagements
